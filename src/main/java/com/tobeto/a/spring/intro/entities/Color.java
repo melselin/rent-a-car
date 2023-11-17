@@ -4,19 +4,19 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-@Table(name = "brands")
+
+@Table(name = "colors")
 @Entity
-public class Brand {
+public class Color {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "brand")
-    private String brand;
+    @Column(name = "color")
+    private String color;
 
-    @OneToMany(mappedBy = "brand")
+    @OneToMany(mappedBy = "color")
     private List<Product> products;
-
 }

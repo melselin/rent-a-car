@@ -2,7 +2,6 @@ package com.tobeto.a.spring.intro.entities;
 
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
 
 // ORM => Object Relation Mapping
 @Table(name = "cars")
@@ -20,7 +19,7 @@ public class Car {
     private String modelName;
 
     @Column(name = "daily_price")
-    private BigDecimal dailyPrice;
+    private double dailyPrice;
 
     @Column(name = "color")
     private String color;

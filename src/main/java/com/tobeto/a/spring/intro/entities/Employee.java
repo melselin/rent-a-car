@@ -1,11 +1,15 @@
 package com.tobeto.a.spring.intro.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Table(name = "employees")
 @Entity
+@Getter
+@Setter
 public class Employee {
     @Id
     @Column(name = "id")

@@ -1,11 +1,16 @@
 package com.tobeto.a.spring.intro.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Table(name = "departments")
 @Entity
+@Getter
+@Setter
 public class Department {
     @Id
     @Column(name = "id")
@@ -16,6 +21,7 @@ public class Department {
     private String departmentName;
 
     @OneToMany(mappedBy = "department")
+    @JsonIgnore
     private List<Employee> employees;
 
 

@@ -1,12 +1,18 @@
 package com.tobeto.a.spring.intro.entities;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Table(name = "rent_details")
 @Entity
+@Getter
+@Setter
 public class RentDetail {
     @Id
     @Column(name = "id")
@@ -35,5 +41,6 @@ public class RentDetail {
     private LocalDateTime rentEndDate;
 
     @OneToMany(mappedBy = "employee_id")
+    @JsonIgnore
     private List<Employee> employees;
 }

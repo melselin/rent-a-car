@@ -1,9 +1,14 @@
 package com.tobeto.a.spring.intro.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Table(name = "payments")
 @Entity
+@Getter
+@Setter
 public class Payment {
     @Id
     @Column(name = "id")
@@ -18,6 +23,7 @@ public class Payment {
 
     @OneToOne
     @JoinColumn(name = "payment_method_id")
+    @JsonIgnore
     private PaymentMethod paymentMethod;
 
     @ManyToOne

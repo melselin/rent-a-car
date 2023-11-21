@@ -1,9 +1,15 @@
 package com.tobeto.a.spring.intro.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
 
 @Table(name = "products")
 @Entity
+@Getter
+@Setter
 public class Product {
     @Id
     @Column(name = "id")
@@ -26,12 +32,10 @@ public class Product {
     @Column(name = "licence_plate")
     private String licencePlate;
 
-    @ManyToOne
-    @JoinColumn(name = "gear_shift_type_id")
-    private GearShiftType gearShiftType;
+    @OneToMany(mappedBy = "product")
+    private List<GearShiftType> gearShiftTypes;
 
-    @ManyToOne
-    @JoinColumn(name = "color_id")
-    private Color color;
+    @OneToMany(mappedBy = "product")
+    private List<Color> colors;
 
 }

@@ -1,11 +1,13 @@
 package com.tobeto.a.spring.intro.entities;
 
 import jakarta.persistence.*;
-
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 @Table(name = "identities")
 @Entity
+@Getter
+@Setter
 public class Identity {
     @Id
     @Column(name = "id")
@@ -19,9 +21,11 @@ public class Identity {
     private String driverLicenceNum;
 
 
-    @OneToOne(mappedBy = "identity")
-    private List<Employee> employees;
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
-    @OneToOne(mappedBy = "identity")
-    private List<Customer> customers;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 }

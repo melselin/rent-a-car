@@ -1,12 +1,14 @@
 package com.tobeto.a.spring.intro.entities;
 
 import jakarta.persistence.*;
-
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Table(name = "colors")
 @Entity
+@Getter
+@Setter
 public class Color {
 
     @Id
@@ -17,6 +19,7 @@ public class Color {
     @Column(name = "color")
     private String color;
 
-    @OneToMany(mappedBy = "color")
-    private List<Product> products;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 }

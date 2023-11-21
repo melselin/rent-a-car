@@ -1,11 +1,13 @@
 package com.tobeto.a.spring.intro.entities;
 
 import jakarta.persistence.*;
-
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 @Table(name = "departments")
 @Entity
+@Getter
+@Setter
 public class Department {
     @Id
     @Column(name = "id")
@@ -15,8 +17,9 @@ public class Department {
     @Column(name = "department_name")
     private String departmentName;
 
-    @OneToMany(mappedBy = "department")
-    private List<Employee> employees;
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
 
 }

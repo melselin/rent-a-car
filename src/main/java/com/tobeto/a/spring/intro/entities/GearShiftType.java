@@ -1,11 +1,13 @@
 package com.tobeto.a.spring.intro.entities;
 
 import jakarta.persistence.*;
-
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 @Table(name = "gear_shift_types")
 @Entity
+@Getter
+@Setter
 public class GearShiftType {
     @Id
     @Column(name = "id")
@@ -15,6 +17,7 @@ public class GearShiftType {
     @Column(name = "type")
     private String type;
 
-    @OneToMany(mappedBy = "gearShiftType")
-    private List<Product> products;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 }

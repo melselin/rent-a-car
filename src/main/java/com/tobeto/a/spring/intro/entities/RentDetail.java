@@ -1,12 +1,16 @@
 package com.tobeto.a.spring.intro.entities;
 
-import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Table(name = "rent_details")
 @Entity
+@Getter
+@Setter
 public class RentDetail {
     @Id
     @Column(name = "id")
@@ -15,25 +19,26 @@ public class RentDetail {
 
     @ManyToOne
     @JoinColumn(name = "payment_id")
-    private List<Payment> payments;
+    private Payment payment;
 
     @Column(name = "total_rent_day")
     private int totalRentDay;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private List<Customer> customers;
+    private Customer customer;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private List<Product> products;
+    private Product product;
 
     @Column(name = "rent_start_date")
-    private LocalDateTime rentStartDate;
+    private LocalDate rentStartDate;
 
     @Column(name = "rent_end_date")
-    private LocalDateTime rentEndDate;
+    private LocalDate rentEndDate;
 
-    @OneToMany(mappedBy = "employee_id")
-    private List<Employee> employees;
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 }

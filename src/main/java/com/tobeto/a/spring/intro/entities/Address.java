@@ -1,24 +1,28 @@
 package com.tobeto.a.spring.intro.entities;
 
 import jakarta.persistence.*;
-
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 @Table(name = "addresses")
 @Entity
+@Getter
+@Setter
 public class Address {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "addresses")
+    @Column(name = "address")
     private String address;
 
 
-    @OneToMany(mappedBy = "address")
-    private List<Customer> customers;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
-    @OneToMany(mappedBy = "address")
-    private List<Employee> employees;
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 }

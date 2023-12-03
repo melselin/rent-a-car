@@ -2,6 +2,12 @@ package com.tobeto.a.spring.intro.controllers;
 
 import com.tobeto.a.spring.intro.entities.Customer;
 import com.tobeto.a.spring.intro.repositories.CustomerRepository;
+import com.tobeto.a.spring.intro.services.abstracts.CustomerService;
+import com.tobeto.a.spring.intro.services.dtos.customer.requests.AddCustomerRequest;
+import com.tobeto.a.spring.intro.services.dtos.customer.requests.DeleteCustomerRequest;
+import com.tobeto.a.spring.intro.services.dtos.customer.requests.UpdateCustomerRequest;
+import com.tobeto.a.spring.intro.services.dtos.customer.responses.GetListCustomerResponse;
+import com.tobeto.a.spring.intro.services.dtos.product.requests.UpdateProductRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,43 +15,35 @@ import java.util.List;
 @RestController
 @RequestMapping("api/customers")
 public class CustomersController {
-    private final CustomerRepository customerRepository;
+    private CustomerService customerService;
 
-    public CustomersController(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
-
-    @GetMapping
-    public List<Customer> getAll(){
-        List<Customer> customers = customerRepository.findAll();
-        return customers;
-    }
-
-    @GetMapping("{id}")
-    public Customer getById(@PathVariable int id){
-        return customerRepository.findById(id).orElseThrow();
+    public CustomersController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     @PostMapping
-    public void add(@RequestBody Customer customer){
-        customerRepository.save(customer);
+    public void add(@RequestBody AddCustomerRequest request) {
+        customerService.add(request);
+    }
+
+    @GetMapping
+    public List<Customer> getByName(@RequestParam String name){
+        return customerService.getByName(name);
+    }
+
+    @GetMapping("dto")
+    public  List<GetListCustomerResponse> getByNameDto(@RequestParam String name){
+        return  customerService.getByNameDto(name);
+    }
+    @PutMapping
+    public void update(@RequestBody UpdateCustomerRequest request) {
+        customerService.update(request);
     }
 
     @DeleteMapping
-    public void delete(@PathVariable int id){
-        Customer customerToDelete = customerRepository.findById(id).orElseThrow();
-        customerRepository.delete(customerToDelete);
+    public void delete(@RequestBody DeleteCustomerRequest request) {
+        customerService.delete(request);
     }
 
-    @PutMapping
-    public void update(@PathVariable int id, @RequestBody Customer customer){
-        Customer customerToUpdate = customerRepository.findById(id).orElseThrow();
-        customerToUpdate.setName(customer.getName());
-        customerToUpdate.setAge(customer.getAge());
-        customerToUpdate.setSurname(customer.getSurname());
-        customerRepository.save(customerToUpdate);
 
-
-
-    }
 }

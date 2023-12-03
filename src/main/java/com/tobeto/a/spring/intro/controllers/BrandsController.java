@@ -1,49 +1,45 @@
 package com.tobeto.a.spring.intro.controllers;
-
 import com.tobeto.a.spring.intro.entities.Brand;
-import com.tobeto.a.spring.intro.repositories.BrandRepository;
+import com.tobeto.a.spring.intro.services.abstracts.BrandService;
+import com.tobeto.a.spring.intro.services.concretes.BrandManager;
+import com.tobeto.a.spring.intro.services.dtos.brand.requests.AddBrandRequest;
+import com.tobeto.a.spring.intro.services.dtos.brand.requests.DeleteBrandRequest;
+import com.tobeto.a.spring.intro.services.dtos.brand.requests.UpdateBrandRequest;
+import com.tobeto.a.spring.intro.services.dtos.brand.responses.GetListBrandResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// Single Responsibility
 @RestController
 @RequestMapping("api/brands")
 public class BrandsController {
-    private final BrandRepository brandRepository;
+    // BAĞIMLILIKLAR DAİMA SOYUT NESNELER ÜZERİNDEN
+    private BrandService brandService;
 
-    public BrandsController(BrandRepository brandRepository) {
-        this.brandRepository = brandRepository;
+    public BrandsController(BrandService brandService) {
+        this.brandService = brandService;
     }
 
-    @GetMapping
-    public List<Brand> getAll(){
-        List<Brand> brands = brandRepository.findAll();
-        return brands;
-    }
-
-    @GetMapping("{id}")
-    public Brand getById(@PathVariable int id){
-        return brandRepository.findById(id).orElseThrow();
-    }
 
     @PostMapping
-    public void add(@RequestBody Brand brand){
-        brandRepository.save(brand);
+    public void add(@RequestBody AddBrandRequest request){
+        brandService.add(request);
     }
-
-    @DeleteMapping
-    public void delete(@PathVariable int id){
-        Brand brandToDelete = brandRepository.findById(id).orElseThrow();
-        brandRepository.delete(brandToDelete);
+    @GetMapping
+    public List<Brand> getByName(@RequestParam String name){
+        return brandService.getByName(name);
     }
-
+    @GetMapping("dto")
+    public List<GetListBrandResponse> getByNameDto(@RequestParam String name){
+        return brandService.getByNameDto(name);
+    }
     @PutMapping
-    public void update(@PathVariable int id, @RequestBody Brand brand){
-        Brand brandToUpdate = brandRepository.findById(id).orElseThrow();
-        brandToUpdate.setName(brand.getName());
-        brandRepository.save(brandToUpdate);
-
-
-
+    public void update(@RequestBody UpdateBrandRequest request){
+        brandService.update(request);
+    }
+    @DeleteMapping
+    public void delete(@RequestBody DeleteBrandRequest request){
+        brandService.delete(request);
     }
 }

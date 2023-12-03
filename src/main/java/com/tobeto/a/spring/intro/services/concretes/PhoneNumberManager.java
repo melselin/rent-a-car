@@ -6,7 +6,10 @@ import com.tobeto.a.spring.intro.services.abstracts.PhoneNumberService;
 import com.tobeto.a.spring.intro.services.dtos.phoneNumber.requests.AddPhoneNumberRequest;
 import com.tobeto.a.spring.intro.services.dtos.phoneNumber.requests.DeletePhoneNumberRequest;
 import com.tobeto.a.spring.intro.services.dtos.phoneNumber.requests.UpdatePhoneNumberRequest;
+import com.tobeto.a.spring.intro.services.dtos.phoneNumber.responses.GetListPhoneNumberResponse;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PhoneNumberManager implements PhoneNumberService {
@@ -20,14 +23,24 @@ public class PhoneNumberManager implements PhoneNumberService {
     @Override
     public void add(AddPhoneNumberRequest request) {
         PhoneNumber phoneNumber = new PhoneNumber();
-        phoneNumber.setPhoneNum(request.getNumber());
+        phoneNumber.setNumber(request.getNumber());
         phoneNumberRepository.save(phoneNumber);
+    }
+
+    @Override
+    public List<PhoneNumber> getByNumber(String number) {
+        return phoneNumberRepository.findByNumberStartingWith(number);
+    }
+
+    @Override
+    public List<GetListPhoneNumberResponse> getByNumberDto(String number) {
+        return phoneNumberRepository.findByNumber(number);
     }
 
     @Override
     public void update(UpdatePhoneNumberRequest request) {
         PhoneNumber phoneNumberToUpdate = phoneNumberRepository.findById(request.getId()).orElseThrow();
-        phoneNumberToUpdate.setPhoneNum(request.getNumber());
+        phoneNumberToUpdate.setNumber(request.getNumber());
         phoneNumberRepository.save(phoneNumberToUpdate);
 
     }

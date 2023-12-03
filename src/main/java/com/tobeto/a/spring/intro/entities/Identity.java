@@ -15,7 +15,7 @@ public class Identity {
     private int id;
 
     @Column(name = "national_id_or_passport_number")
-    private String nationalIdOrPassportNum;
+    private String nationalId;
 
     @Column(name = "driver_licence_number")
     private String driverLicenceNum;

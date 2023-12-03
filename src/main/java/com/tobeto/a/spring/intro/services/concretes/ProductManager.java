@@ -6,7 +6,10 @@ import com.tobeto.a.spring.intro.services.abstracts.ProductService;
 import com.tobeto.a.spring.intro.services.dtos.product.requests.AddProductRequest;
 import com.tobeto.a.spring.intro.services.dtos.product.requests.DeleteProductRequest;
 import com.tobeto.a.spring.intro.services.dtos.product.requests.UpdateProductRequest;
+import com.tobeto.a.spring.intro.services.dtos.product.responses.GetListProductResponse;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ProductManager implements ProductService {
@@ -26,8 +29,19 @@ public class ProductManager implements ProductService {
     }
 
     @Override
+    public List<Product> getByModel(String model) {
+        return productRepository.findByModelStartingWith(model);
+    }
+
+    @Override
+    public List<GetListProductResponse> getByModelDto(String model) {
+        return productRepository.findByModel(model);
+    }
+
+    @Override
     public void update(UpdateProductRequest request) {
         Product productToUpdate = productRepository.findById(request.getId()).orElseThrow();
+        productToUpdate.setModel(request.getModel());
         productToUpdate.setLicencePlate(request.getLicencePlate());
         productRepository.save(productToUpdate);
     }

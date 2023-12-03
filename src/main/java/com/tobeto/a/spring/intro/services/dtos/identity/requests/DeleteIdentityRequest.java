@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class DeleteIdentityRequest {
-    private String nationalIdOrPassportNumber;
+    private String nationalId;
     private String driverLicenceNumber;
     private int id;
 }

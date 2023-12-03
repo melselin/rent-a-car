@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class UpdateIdentityRequest {
-    private String nationalIdOrPassportNumber;
+    private String nationalId;
     private String driverLicenceNumber;
     private int id;
 }

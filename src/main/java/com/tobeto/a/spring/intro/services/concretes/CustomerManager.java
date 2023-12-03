@@ -7,7 +7,10 @@ import com.tobeto.a.spring.intro.services.abstracts.CustomerService;
 import com.tobeto.a.spring.intro.services.dtos.customer.requests.AddCustomerRequest;
 import com.tobeto.a.spring.intro.services.dtos.customer.requests.DeleteCustomerRequest;
 import com.tobeto.a.spring.intro.services.dtos.customer.requests.UpdateCustomerRequest;
+import com.tobeto.a.spring.intro.services.dtos.customer.responses.GetListCustomerResponse;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CustomerManager implements CustomerService {
@@ -41,5 +44,15 @@ public class CustomerManager implements CustomerService {
         Customer customerToDelete = customerRepository.findById(request.getId()).orElseThrow();
         customerRepository.delete(customerToDelete);
 
+    }
+
+    @Override
+    public List<Customer> getByName(String name) {
+        return customerRepository.findByNameStartingWith(name);
+    }
+
+    @Override
+    public List<GetListCustomerResponse> getByNameDto(String name) {
+        return customerRepository.findByName(name);
     }
 }

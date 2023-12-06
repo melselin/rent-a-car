@@ -46,9 +46,12 @@ public class CustomerManager implements CustomerService {
 
     }
 
+
     @Override
-    public List<Customer> getByName(String name) {
-        return customerRepository.findByNameStartingWith(name);
+    public List<GetListCustomerResponse> getByName(String name) {
+        return customerRepository.findByNameStartingWith(name).stream().map((customer) -> {
+            return new GetListCustomerResponse(customer.getId(),customer.getName(),customer.getSurname(),customer.getAge());
+        }).toList();
     }
 
     @Override

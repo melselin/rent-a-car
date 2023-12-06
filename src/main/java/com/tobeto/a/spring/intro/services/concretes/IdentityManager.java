@@ -30,8 +30,10 @@ public class IdentityManager implements IdentityService {
     }
 
     @Override
-    public List<Identity> getByNationalId(String nationalId) {
-        return identityRepository.findByNationalIdStartingWith(nationalId);
+    public List<GetListIdentityResponse> getByNationalId(String nationalId) {
+        return identityRepository.findByNationalIdStartingWith(nationalId).stream().map(identity -> {
+            return new GetListIdentityResponse(identity.getId(),identity.getNationalId(),identity.getDriverLicenceNum());
+        }).toList();
     }
 
     @Override

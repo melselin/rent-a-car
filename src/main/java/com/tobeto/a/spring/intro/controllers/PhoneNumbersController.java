@@ -21,7 +21,7 @@ public class PhoneNumbersController {
 
 
     @GetMapping()
-    public List<PhoneNumber> getByNumber(@RequestParam String number){
+    public List<GetListPhoneNumberResponse> getByNumber(@RequestParam String number){
         return phoneNumberService.getByNumber(number);
     }
 

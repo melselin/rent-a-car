@@ -23,7 +23,7 @@ public class IdentitiesController {
 
 
     @GetMapping
-    public List<Identity> getByNationalId(@RequestParam String nationalId) {
+    public List<GetListIdentityResponse> getByNationalId(@RequestParam String nationalId) {
         return identityService.getByNationalId(nationalId);
     }
 

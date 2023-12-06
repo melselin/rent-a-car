@@ -28,26 +28,28 @@ public class PhoneNumberManager implements PhoneNumberService {
     }
 
     @Override
-    public List<PhoneNumber> getByNumber(String number) {
-        return phoneNumberRepository.findByNumberStartingWith(number);
+    public List<GetListPhoneNumberResponse> getByNumber(String number) {
+        return phoneNumberRepository.findByNumberStartingWith(number).stream().map((phoneNumber) -> {
+            return new GetListPhoneNumberResponse(phoneNumber.getId(), phoneNumber.getNumber());
+        }).toList();
     }
 
-    @Override
-    public List<GetListPhoneNumberResponse> getByNumberDto(String number) {
-        return phoneNumberRepository.findByNumber(number);
-    }
+        @Override
+        public List<GetListPhoneNumberResponse> getByNumberDto (String number){
+            return phoneNumberRepository.findByNumber(number);
+        }
 
-    @Override
-    public void update(UpdatePhoneNumberRequest request) {
-        PhoneNumber phoneNumberToUpdate = phoneNumberRepository.findById(request.getId()).orElseThrow();
-        phoneNumberToUpdate.setNumber(request.getNumber());
-        phoneNumberRepository.save(phoneNumberToUpdate);
+        @Override
+        public void update (UpdatePhoneNumberRequest request){
+            PhoneNumber phoneNumberToUpdate = phoneNumberRepository.findById(request.getId()).orElseThrow();
+            phoneNumberToUpdate.setNumber(request.getNumber());
+            phoneNumberRepository.save(phoneNumberToUpdate);
 
-    }
+        }
 
-    @Override
-    public void delete(DeletePhoneNumberRequest request) {
-        PhoneNumber phoneNumberToDelete = phoneNumberRepository.findById(request.getId()).orElseThrow();
-        phoneNumberRepository.delete(phoneNumberToDelete);
+        @Override
+        public void delete (DeletePhoneNumberRequest request){
+            PhoneNumber phoneNumberToDelete = phoneNumberRepository.findById(request.getId()).orElseThrow();
+            phoneNumberRepository.delete(phoneNumberToDelete);
+        }
     }
-}

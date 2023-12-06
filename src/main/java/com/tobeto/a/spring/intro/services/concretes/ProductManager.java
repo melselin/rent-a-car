@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class ProductManager implements ProductService {
 
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     public ProductManager(ProductRepository productRepository) {
         this.productRepository = productRepository;
@@ -29,16 +29,6 @@ public class ProductManager implements ProductService {
     }
 
     @Override
-    public List<Product> getByModel(String model) {
-        return productRepository.findByModelStartingWith(model);
-    }
-
-    @Override
-    public List<GetListProductResponse> getByModelDto(String model) {
-        return productRepository.findByModel(model);
-    }
-
-    @Override
     public void update(UpdateProductRequest request) {
         Product productToUpdate = productRepository.findById(request.getId()).orElseThrow();
         productToUpdate.setModel(request.getModel());
@@ -50,5 +40,10 @@ public class ProductManager implements ProductService {
     public void delete(DeleteProductRequest request) {
         Product productToDelete = productRepository.findById(request.getId()).orElseThrow();
         productRepository.delete(productToDelete);
+    }
+
+    @Override
+    public List<GetListProductResponse> getAll() {
+        return productRepository.getAll();
     }
 }

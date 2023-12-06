@@ -24,7 +24,7 @@ public class BrandManager implements BrandService {
     @Override
     public void add(AddBrandRequest request) {
         // iş akışı çalıştıktan sonra..
-        if(request.getName().length() < 3)
+        if (request.getName().length() < 3)
             throw new RuntimeException("Marka ismi 3 haneden küçük olamaz");
 
         Brand brand = new Brand();
@@ -33,12 +33,7 @@ public class BrandManager implements BrandService {
     }
 
     @Override
-    public List<Brand> getByName(String name) {
-        return brandRepository.findByNameStartingWith(name);
-    }
-
-    @Override
-    public List<GetListBrandResponse> getByNameDto(String name) {
+    public List<GetListBrandResponse> getByName(String name) {
         //TODO: Yaklaşım 1: Repositoryden List<Brand>'i alıp Service katmanında Mapleyerek DTO türüne çevirmek.
         /*
         List<Brand> brands = brandRepository.findByNameStartingWith(name);
@@ -48,6 +43,15 @@ public class BrandManager implements BrandService {
         }
         return dtos
         */
+
+        return brandRepository.findByNameStartingWith(name).stream().map((brand) -> {
+            return new GetListBrandResponse(brand.getId(), brand.getName());
+        }).toList();
+    }
+
+    @Override
+    public List<GetListBrandResponse> getByNameDto(String name) {
+
 
         //TODO: Yaklaşım 2: Repositoryde List<GetListBrandResponse> dönebilen yeni bir method oluşturmak.
         return brandRepository.findByName(name);

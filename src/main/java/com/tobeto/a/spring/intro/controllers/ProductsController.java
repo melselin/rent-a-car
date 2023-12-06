@@ -3,6 +3,7 @@ package com.tobeto.a.spring.intro.controllers;
 import com.tobeto.a.spring.intro.entities.Product;
 import com.tobeto.a.spring.intro.repositories.ProductRepository;
 import com.tobeto.a.spring.intro.services.abstracts.ProductService;
+import com.tobeto.a.spring.intro.services.dtos.brand.responses.GetListBrandResponse;
 import com.tobeto.a.spring.intro.services.dtos.product.responses.GetListProductResponse;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,28 +12,20 @@ import java.util.List;
 @RestController
 @RequestMapping("products")
 public class ProductsController {
-    private ProductRepository productRepository;
-    private ProductService productService;
+    private final ProductRepository productRepository;
+    private final ProductService productService;
 
     public ProductsController(ProductRepository productRepository, ProductService productService) {
         this.productRepository = productRepository;
         this.productService = productService;
     }
 
-    @GetMapping()
-    public List<Product> getByModel(@RequestParam String model) {
-        return productService.getByModel(model);
+
+    @GetMapping
+    public List<GetListProductResponse> getAll(){
+        return productService.getAll();
     }
 
-    @GetMapping("dto")
-    public List<GetListProductResponse> getByModelDto(@RequestParam String model) {
-        return productService.getByModelDto(model);
-    }
-
-    @GetMapping("{id}")
-    public Product getById(@PathVariable int id) {
-        return productRepository.findById(id).orElseThrow();
-    }
 
     @PostMapping
     public void add(@RequestBody Product product) {

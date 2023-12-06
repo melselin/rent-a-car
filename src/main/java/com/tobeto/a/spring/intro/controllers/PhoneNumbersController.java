@@ -11,8 +11,8 @@ import java.util.List;
 @RestController
 @RequestMapping("phoneNumbers")
 public class PhoneNumbersController {
-    private PhoneNumberRepository phoneNumberRepository;
-    private PhoneNumberService phoneNumberService;
+    private final PhoneNumberRepository phoneNumberRepository;
+    private final PhoneNumberService phoneNumberService;
 
     public PhoneNumbersController(PhoneNumberRepository phoneNumberRepository, PhoneNumberService phoneNumberService) {
         this.phoneNumberRepository = phoneNumberRepository;

@@ -12,9 +12,9 @@ import java.util.List;
 @RequestMapping("api/identities")
 public class IdentitiesController {
 
-    private IdentityRepository identityRepository;
+    private final IdentityRepository identityRepository;
 
-    private IdentityService identityService;
+    private final IdentityService identityService;
 
     public IdentitiesController(IdentityRepository identityRepository, IdentityService identityService) {
         this.identityRepository = identityRepository;

@@ -8,10 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product,Integer> {
-    List<Product> findByModelStartingWith(String model);
 
-    @Query("Select new com.tobeto.a.spring.intro.services.dtos.product.responses.GetListProductResponse(p.id, p.model) " +
-            "FROM Product p WHERE p.model= :model")
+    @Query("Select new com.tobeto.a.spring.intro.services.dtos.product.responses.GetListProductResponse" +
+            "( p.id, p.model, p.dailyPrice, p.description, p.licencePlate, new com.tobeto.a.spring.intro.services.dtos.brand.responses.GetListBrandResponse(b.id, b.name)  ) " +
+            "from Product p INNER JOIN p.brand b")
 
-    List<GetListProductResponse> findByModel(String model);
+    List<GetListProductResponse> getAll();
 }

@@ -26,7 +26,7 @@ public class CustomersController {
         customerService.add(request);
     }
 
-    @GetMapping
+/*    @GetMapping
     public List<Customer> getByName(@RequestParam String name){
         return customerService.getByName(name);
     }
@@ -34,7 +34,7 @@ public class CustomersController {
     @GetMapping("dto")
     public  List<GetListCustomerResponse> getByNameDto(@RequestParam String name){
         return  customerService.getByNameDto(name);
-    }
+    }*/
     @PutMapping
     public void update(@RequestBody UpdateCustomerRequest request) {
         customerService.update(request);

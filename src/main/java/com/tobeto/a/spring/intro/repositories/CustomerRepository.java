@@ -9,9 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
-    List<Customer> findByNameStartingWith(String name);
 
-    @Query("Select new com.tobeto.a.spring.intro.services.dtos.customer.responses.GetListCustomerResponse(c.id, c.name) " +
+    List<GetListCustomerResponse> findByNameStartingWith(String name);
+    @Query("Select new com.tobeto.a.spring.intro.services.dtos.customer.responses.GetListCustomerResponse(c.id, c.name, c.surname, c.age) " +
             "FROM Customer c WHERE c.name= :name")
+
+
     List<GetListCustomerResponse> findByName(String name);
 }

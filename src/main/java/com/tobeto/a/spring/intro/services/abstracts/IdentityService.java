@@ -1,6 +1,5 @@
 package com.tobeto.a.spring.intro.services.abstracts;
 
-import com.tobeto.a.spring.intro.entities.Identity;
 import com.tobeto.a.spring.intro.services.dtos.identity.requests.AddIdentityRequest;
 import com.tobeto.a.spring.intro.services.dtos.identity.requests.DeleteIdentityRequest;
 import com.tobeto.a.spring.intro.services.dtos.identity.requests.UpdateIdentityRequest;
@@ -10,7 +9,7 @@ import java.util.List;
 
 public interface IdentityService {
     void add(AddIdentityRequest request);
-    List<Identity> getByNationalId(String nationalId);
+    List<GetListIdentityResponse> getByNationalId(String nationalId);
     List<GetListIdentityResponse> getByNationalIdDto(String nationalId);
 
     void update(UpdateIdentityRequest request);

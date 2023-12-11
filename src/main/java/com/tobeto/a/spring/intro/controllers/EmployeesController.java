@@ -2,51 +2,47 @@ package com.tobeto.a.spring.intro.controllers;
 
 import com.tobeto.a.spring.intro.entities.Employee;
 import com.tobeto.a.spring.intro.repositories.EmployeeRepository;
+import com.tobeto.a.spring.intro.services.abstracts.EmployeeService;
+import com.tobeto.a.spring.intro.services.dtos.color.requests.AddColorRequest;
+import com.tobeto.a.spring.intro.services.dtos.employee.requests.AddEmployeeRequest;
+import com.tobeto.a.spring.intro.services.dtos.employee.requests.DeleteEmployeeRequest;
+import com.tobeto.a.spring.intro.services.dtos.employee.requests.UpdateEmployeeRequest;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("api/employees")
-public class EmployeesController{
+public class EmployeesController {
     private final EmployeeRepository employeeRepository;
-
-    public EmployeesController(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
-
+    private final EmployeeService employeeService;
 
     @GetMapping
-    public List<Employee> getAll(){
+    public List<Employee> getAll() {
         List<Employee> employees = employeeRepository.findAll();
         return employees;
     }
 
     @GetMapping("{id}")
-    public Employee getById(@PathVariable int id){
+    public Employee getById(@PathVariable int id) {
         return employeeRepository.findById(id).orElseThrow();
     }
 
     @PostMapping
-    public void add(@RequestBody Employee employee){
-        employeeRepository.save(employee);
+    public void add(@RequestBody @Valid AddEmployeeRequest request) {
+        employeeService.add(request);
     }
 
     @DeleteMapping
-    public void delete(@PathVariable int id){
-        Employee employeeToDelete = employeeRepository.findById(id).orElseThrow();
-        employeeRepository.delete(employeeToDelete);
+    public void delete(@PathVariable DeleteEmployeeRequest request) {
+        employeeService.delete(request);
     }
 
     @PutMapping
-    public void update(@PathVariable int id, @RequestBody Employee employee){
-        Employee employeeToUpdate = employeeRepository.findById(id).orElseThrow();
-        employeeToUpdate.setName(employee.getName());
-        employeeToUpdate.setSurname(employee.getSurname());
-        employeeToUpdate.setAge(employee.getAge());
-        employeeRepository.save(employeeToUpdate);
-
-
-
+    public void update(@PathVariable int id, @RequestBody @Valid UpdateEmployeeRequest request) {
+        employeeService.update(request);
     }
 }

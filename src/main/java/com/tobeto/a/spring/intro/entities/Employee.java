@@ -1,5 +1,6 @@
 package com.tobeto.a.spring.intro.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,19 +26,16 @@ public class Employee {
     @Column(name = "age")
     private int age;
 
-    @OneToMany(mappedBy = "employee")
-    private List<Address> addresses;
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
 
     @OneToMany(mappedBy = "employee")
-    private List<PhoneNumber> phoneNumbers;
-
-    @OneToMany(mappedBy = "employee")
-    private List<Identity> identities;
-
-    @OneToMany(mappedBy = "employee")
-    private List<Department> departments;
-
-    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private List<RentDetail> rentDetails;
 
 }

@@ -17,20 +17,8 @@ public class RentDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "payment_id")
-    private Payment payment;
-
     @Column(name = "total_rent_day")
     private int totalRentDay;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
 
     @Column(name = "rent_start_date")
     private LocalDate rentStartDate;
@@ -39,6 +27,15 @@ public class RentDetail {
     private LocalDate rentEndDate;
 
     @ManyToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
 }

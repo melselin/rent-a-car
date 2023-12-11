@@ -28,20 +28,12 @@ public class Customer {
     private int age;
 
 
-    @OneToMany(mappedBy = "customer")
-    private List<PhoneNumber> phoneNumbers;
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     @OneToMany(mappedBy = "customer")
-    private List<Address> addresses;
-
-    @OneToMany(mappedBy = "customer")
-    private List<Identity> identities;
-
-    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
     private List<RentDetail> rentDetails;
-
-    @OneToMany(mappedBy = "customer")
-    //@JsonIgnore
-    private List<Payment> payments;
 
 }

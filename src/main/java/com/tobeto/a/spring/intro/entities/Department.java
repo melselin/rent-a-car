@@ -1,8 +1,11 @@
 package com.tobeto.a.spring.intro.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Table(name = "departments")
 @Entity
@@ -14,12 +17,11 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "department_name")
-    private String departmentName;
+    @Column(name = "name")
+    private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
-
+    @OneToMany(mappedBy = "department")
+    @JsonIgnore
+    private List<Employee> employees;
 
 }

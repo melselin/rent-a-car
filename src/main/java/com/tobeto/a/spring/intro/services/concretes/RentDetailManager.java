@@ -12,7 +12,6 @@ import com.tobeto.a.spring.intro.services.abstracts.RentDetailService;
 import com.tobeto.a.spring.intro.services.dtos.rentDetail.requests.AddRentDetailRequest;
 import com.tobeto.a.spring.intro.services.dtos.rentDetail.requests.DeleteRentDetailRequest;
 import com.tobeto.a.spring.intro.services.dtos.rentDetail.requests.UpdateRentDetailRequest;
-import com.tobeto.a.spring.intro.services.dtos.rentDetail.responses.GetListRentDetailResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,14 +25,10 @@ public class RentDetailManager implements RentDetailService {
     private final CarService carService;
     private final EmployeeService employeeService;
 
-    @Override
-    public List<RentDetail> getByName(String name) {
-        return rentDetailRepository.findByNameStartingWith(name);
-    }
 
     @Override
-    public List<GetListRentDetailResponse> getByNameDto(String name) {
-        return rentDetailRepository.findByNameDto(name);
+    public List<RentDetail> getAll() {
+        return rentDetailRepository.findAll();
     }
 
     @Override

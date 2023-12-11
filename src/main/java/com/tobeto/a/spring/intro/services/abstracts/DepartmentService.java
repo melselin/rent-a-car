@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface DepartmentService {
     List<Department> getByName(String name);
-    List<GetListDepartmentResponse> getByNameDto(String name);
+
     void add(AddDepartmentRequest request);
     void update(UpdateDepartmentRequest request);
     void delete(DeleteDepartmentRequest request);

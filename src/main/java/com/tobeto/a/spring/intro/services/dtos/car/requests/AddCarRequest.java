@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
+
 
 @Data
 @AllArgsConstructor
@@ -17,6 +17,5 @@ public class AddCarRequest {
     @NotBlank
     private String model;
     @NotBlank
-    @Length(min = 6)
     private String licencePlate;
 }

@@ -7,9 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
-    List<Employee> findByNameStartingWith(String name);
 
-    List<GetListEmployeeResponse> findByNameDto(String name);
+    List<Employee> findByName(String name);
 
     boolean existsEmployeeByName(String name);
 

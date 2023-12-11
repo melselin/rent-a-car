@@ -10,7 +10,6 @@ import com.tobeto.a.spring.intro.services.abstracts.EmployeeService;
 import com.tobeto.a.spring.intro.services.dtos.employee.requests.AddEmployeeRequest;
 import com.tobeto.a.spring.intro.services.dtos.employee.requests.DeleteEmployeeRequest;
 import com.tobeto.a.spring.intro.services.dtos.employee.requests.UpdateEmployeeRequest;
-import com.tobeto.a.spring.intro.services.dtos.employee.responses.GetListEmployeeResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,14 +23,10 @@ public class EmployeeManager implements EmployeeService {
     private final AddressService addressService;
     private final DepartmentService departmentService;
 
-    @Override
-    public List<Employee> getByName(String name) {
-        return employeeRepository.findByNameStartingWith(name);
-    }
 
     @Override
-    public List<GetListEmployeeResponse> getByNameDto(String name) {
-        return employeeRepository.findByNameDto(name);
+    public List<Employee> getByName() {
+        return employeeRepository.findAll();
     }
 
     @Override

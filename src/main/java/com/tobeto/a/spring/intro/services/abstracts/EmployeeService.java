@@ -9,8 +9,7 @@ import com.tobeto.a.spring.intro.services.dtos.employee.responses.GetListEmploye
 import java.util.List;
 
 public interface EmployeeService {
-    List<Employee> getByName(String name);
-    List<GetListEmployeeResponse> getByNameDto(String name);
+  List<Employee> getByName();
     void add(AddEmployeeRequest request);
     void update(UpdateEmployeeRequest request);
     void delete(DeleteEmployeeRequest request);

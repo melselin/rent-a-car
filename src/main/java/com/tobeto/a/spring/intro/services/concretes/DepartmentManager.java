@@ -18,14 +18,10 @@ public class DepartmentManager implements DepartmentService {
 
     private final DepartmentRepository departmentRepository;
 
-    @Override
-    public List<Department> getByName(String name) {
-        return departmentRepository.findByNameStartingWith(name);
-    }
 
     @Override
-    public List<GetListDepartmentResponse> getByNameDto(String name) {
-        return departmentRepository.findByNameDto(name);
+    public List<Department> getByName(String name) {
+        return departmentRepository.findAll();
     }
 
     @Override

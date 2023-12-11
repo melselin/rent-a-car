@@ -7,8 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface RentDetailRepository extends JpaRepository<RentDetail,Integer> {
-    List<RentDetail> findByNameStartingWith(String name);
+    List<RentDetail> findAll();
 
-    List<GetListRentDetailResponse> findByNameDto(String name);
 
 }

@@ -7,9 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface DepartmentRepository extends JpaRepository<Department,Integer> {
-    List<Department> findByNameStartingWith(String name);
+    List<Department> findByName(String name);
 
-    List<GetListDepartmentResponse> findByNameDto(String name);
 
     boolean existsDepartmentByName(String name);
 

@@ -9,26 +9,12 @@ import java.util.List;
 
 // Generic
 // Generic Typelar Reference Type olarak belirtilmelidir.
-public interface BrandRepository extends JpaRepository<Brand, Integer>
-{
-    // Select * from BRANDS WHERE Name=name
+public interface BrandRepository extends JpaRepository<Brand, Integer> {
 
-
-    // Derived Query Methods => Fonksiyon isimlendirmesi kuralları
-    List<Brand> findByNameStartingWith(String name);
-
-    // Derived Query Methodlar sadece veritabanı entity türüyle çalışır.
-
-    // ********
-    // Tablo ismi değil, entity ismi kullanılacak
-    // Entity'e her zaman alias verilecek "Brand b"
-    // Dinamik alanlarda fonksiyon parametresi okumak için :parametreAdi kalıbı kullanılacak.
-    // JPQL içerisinde obje newlenebilir.
-    // NEWlenen objeler tam yoluyla belirtilmelidir.
-    // ********
-    @Query("Select new com.tobeto.a.spring.intro.services.dtos.brand.responses.GetListBrandResponse(b.id, b.name) " +
-            "FROM Brand b WHERE b.name= :name") // SQL DEĞİL JPQL
-    // Select b.name FROM Brand b Where b.name=BMW
-    // Select b.name FROM Brand b Where b.name=Mercedes
+    @Query("Select new com.tobeto.a.spring.intro.services.dtos.brand.responses.GetListBrandResponse(b.id, b.name) "
+            + "FROM Brand b WHERE b.name= :name")
     List<GetListBrandResponse> findByName(String name);
+
+    boolean existsBrandByName(String name);
+
 }

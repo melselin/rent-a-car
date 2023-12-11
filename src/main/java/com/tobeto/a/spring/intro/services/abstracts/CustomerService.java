@@ -15,11 +15,10 @@ public interface CustomerService {
 
     void delete(DeleteCustomerRequest request);
 
-    /*
-    List<Customer> getByName(String name);
 
-    List<GetListCustomerResponse> getByNameDto(String name); */
-
+    List<Customer> getByNameStartingWith(String name);
     List<GetListCustomerResponse> getByName(String name);
     List<GetListCustomerResponse> getByNameDto(String name);
+
+    Customer getById(int id);
 }

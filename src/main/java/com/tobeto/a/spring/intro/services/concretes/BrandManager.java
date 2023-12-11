@@ -7,26 +7,26 @@ import com.tobeto.a.spring.intro.services.dtos.brand.requests.AddBrandRequest;
 import com.tobeto.a.spring.intro.services.dtos.brand.requests.DeleteBrandRequest;
 import com.tobeto.a.spring.intro.services.dtos.brand.requests.UpdateBrandRequest;
 import com.tobeto.a.spring.intro.services.dtos.brand.responses.GetListBrandResponse;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class BrandManager implements BrandService {
 
     private BrandRepository brandRepository;
 
-    public BrandManager(BrandRepository brandRepository) {
-        this.brandRepository = brandRepository;
-    }
-
 
     @Override
     public void add(AddBrandRequest request) {
-        // iş akışı çalıştıktan sonra..
         if (request.getName().length() < 3)
             throw new RuntimeException("Marka ismi 3 haneden küçük olamaz");
 
+        if (brandRepository.existsBrandByName(request.getName())) {
+            throw new RuntimeException("Bu Marka zaten mevcut.");
+        }
         Brand brand = new Brand();
         brand.setName(request.getName());
         brandRepository.save(brand);
@@ -34,17 +34,8 @@ public class BrandManager implements BrandService {
 
     @Override
     public List<GetListBrandResponse> getByName(String name) {
-        //TODO: Yaklaşım 1: Repositoryden List<Brand>'i alıp Service katmanında Mapleyerek DTO türüne çevirmek.
-        /*
-        List<Brand> brands = brandRepository.findByNameStartingWith(name);
-        List<GetListBrandResponse> dtos = new ArrayList<>();
-        for (Brand brand: brands) {
-            dtos.add(new GetListBrandResponse(brand.getName()));
-        }
-        return dtos
-        */
 
-        return brandRepository.findByNameStartingWith(name).stream().map((brand) -> {
+        return brandRepository.findByName(name).stream().map((brand) -> {
             return new GetListBrandResponse(brand.getId(), brand.getName());
         }).toList();
     }
@@ -52,13 +43,18 @@ public class BrandManager implements BrandService {
     @Override
     public List<GetListBrandResponse> getByNameDto(String name) {
 
-
-        //TODO: Yaklaşım 2: Repositoryde List<GetListBrandResponse> dönebilen yeni bir method oluşturmak.
         return brandRepository.findByName(name);
     }
 
+
     @Override
     public void update(UpdateBrandRequest request) {
+
+        if (request.getName().length() < 3)
+            throw new RuntimeException("Marka ismi 3 haneden küçük olamaz");
+        if (brandRepository.existsBrandByName(request.getName())) {
+            throw new RuntimeException("Bu Marka zaten mevcut.");
+        }
         Brand brandToUpdate = brandRepository.findById(request.getId()).orElseThrow();
 
         brandToUpdate.setName(request.getName());
@@ -69,5 +65,10 @@ public class BrandManager implements BrandService {
     public void delete(DeleteBrandRequest request) {
         Brand brandToDelete = brandRepository.findById(request.getId()).orElseThrow();
         brandRepository.delete(brandToDelete);
+    }
+
+    @Override
+    public Brand getById(int id) {
+        return brandRepository.findById(id).orElseThrow();
     }
 }

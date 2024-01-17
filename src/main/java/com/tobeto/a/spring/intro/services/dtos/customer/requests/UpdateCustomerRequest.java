@@ -14,9 +14,9 @@ public class UpdateCustomerRequest {
     @Positive
     private int id;
     @NotBlank
-    private String name;
+    private String firstName;
     @NotBlank
-    private String surname;
+    private String lastName;
     @Min(value = 18, message = "18'den büyük bir yaş giriniz.")
     private int age;
 }

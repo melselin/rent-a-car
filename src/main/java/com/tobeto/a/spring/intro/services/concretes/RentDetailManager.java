@@ -1,5 +1,6 @@
 package com.tobeto.a.spring.intro.services.concretes;
 
+import com.tobeto.a.spring.intro.core.utilities.mappers.ModelMapperService;
 import com.tobeto.a.spring.intro.entities.Car;
 import com.tobeto.a.spring.intro.entities.Customer;
 import com.tobeto.a.spring.intro.entities.Employee;
@@ -25,6 +26,8 @@ public class RentDetailManager implements RentDetailService {
     private final CarService carService;
     private final EmployeeService employeeService;
 
+    private final ModelMapperService modelMapperService;
+
 
     @Override
     public List<RentDetail> getAll() {
@@ -33,32 +36,15 @@ public class RentDetailManager implements RentDetailService {
 
     @Override
     public void add(AddRentDetailRequest request) {
-        RentDetail rentDetail = new RentDetail();
-        rentDetail.setTotalRentDay(request.getTotalRentDay());
-        rentDetail.setRentStartDate(request.getRentStartDate());
-        rentDetail.setRentEndDate(request.getRentEndDate());
-        Customer customer = customerService.getById(request.getId());
-        rentDetail.setCustomer(customer);
-        Car car = carService.getById(request.getId());
-        rentDetail.setCar(car);
-        Employee employee = employeeService.getById(request.getId());
-        rentDetail.setEmployee(employee);
+        RentDetail rentDetail = this.modelMapperService.forRequest().map(request,RentDetail.class);
+
         rentDetailRepository.save(rentDetail);
 
     }
 
     @Override
     public void update(UpdateRentDetailRequest request) {
-        RentDetail rentDetailToUpdate = rentDetailRepository.findById(request.getId()).orElseThrow();
-        rentDetailToUpdate.setTotalRentDay(request.getTotalRentDay());
-        rentDetailToUpdate.setRentStartDate(request.getRentStartDate());
-        rentDetailToUpdate.setRentEndDate(request.getRentEndDate());
-        Customer customer = customerService.getById(request.getId());
-        rentDetailToUpdate.setCustomer(customer);
-        Car car = carService.getById(request.getId());
-        rentDetailToUpdate.setCar(car);
-        Employee employee = employeeService.getById(request.getId());
-        rentDetailToUpdate.setEmployee(employee);
+        RentDetail rentDetailToUpdate = this.modelMapperService.forRequest().map(request,RentDetail.class);
         rentDetailRepository.save(rentDetailToUpdate);
 
     }
